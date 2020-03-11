@@ -17,12 +17,12 @@ import SwiftUI
     public typealias UserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier
 #endif
 
-protocol Cell: View {
+public protocol Cell: View {
     associatedtype HandleType: Hashable = String
     static var reusableIdentifier: UserInterfaceItemIdentifier { get }
 }
 
-extension Cell {
+public extension Cell {
     #if os(iOS) || os(tvOS)
         static var reusableIdentifier: UserInterfaceItemIdentifier { "\(Self.self)" }
     #endif

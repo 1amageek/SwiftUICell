@@ -11,13 +11,15 @@ import SwiftUI
 
     import UIKit
 
-    extension UICollectionView {
+    @available(iOS 13.0, *)
+    public extension UICollectionView {
         func register<C: Cell>(content: C.Type) {
             register(SwiftUICell<C>.self, forCellWithReuseIdentifier: C.reusableIdentifier)
         }
     }
 
-    class SwiftUICell<Content: Cell>: UICollectionViewCell {
+    @available(iOS 13.0, *)
+    open class SwiftUICell<Content: Cell>: UICollectionViewCell {
 
         typealias ActionHandler = () -> Void
 
@@ -27,6 +29,7 @@ import SwiftUI
             cell.addContentView(contentView)
             return cell
         }
+
 
         class Proxy: ObservableObject {
             var handlers: [Content.HandleType: ActionHandler] = [:]
