@@ -23,23 +23,22 @@ import SwiftUI
 
         typealias ActionHandler = () -> Void
 
-        class func dequeue(collectionView: UICollectionView, indexPath: IndexPath, contentView: Content, parent: UIViewController) -> Self {
+        open class func dequeue(collectionView: UICollectionView, indexPath: IndexPath, contentView: Content, parent: UIViewController) -> Self {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Content.reusableIdentifier, for: indexPath) as! Self
             cell.parentViewController = parent
             cell.addContentView(contentView)
             return cell
         }
 
-
-        class Proxy: ObservableObject {
+        open class Proxy: ObservableObject {
             var handlers: [Content.HandleType: ActionHandler] = [:]
         }
 
-        weak var parentViewController: UIViewController?
+        public weak var parentViewController: UIViewController?
 
-        let proxy: Proxy = Proxy()
+        public let proxy: Proxy = Proxy()
 
-        var hostingViewController: UIViewController? {
+        private var hostingViewController: UIViewController? {
             didSet(oldValue) {
                 guard let parentViewController = self.parentViewController else { return }
                 guard let hostingViewController: UIViewController = oldValue else { return }
@@ -49,7 +48,7 @@ import SwiftUI
             }
         }
 
-        func addContentView(_ contentView: Content) {
+        private func addContentView(_ contentView: Content) {
             guard let parentViewController = self.parentViewController else { return }
             let hostingViewController: UIViewController = UIHostingController(rootView: contentView.environmentObject(self.proxy))
             parentViewController.addChild(hostingViewController)
