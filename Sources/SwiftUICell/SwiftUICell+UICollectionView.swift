@@ -31,7 +31,7 @@ import SwiftUI
         }
 
         open class Proxy: ObservableObject {
-            var handlers: [Content.HandleType: ActionHandler] = [:]
+            public var handlers: [Content.HandleType: ActionHandler] = [:]
         }
 
         public weak var parentViewController: UIViewController?
