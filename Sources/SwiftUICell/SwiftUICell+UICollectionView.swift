@@ -21,7 +21,7 @@ import SwiftUI
     @available(iOS 13.0, *)
     open class SwiftUICell<Content: Cell>: UICollectionViewCell {
 
-        public typealias ActionHandler = (Any?) -> Void
+        public typealias ActionHandler = ((Any?) -> Void)?
 
         open class func dequeue(collectionView: UICollectionView, indexPath: IndexPath, contentView: Content, parent: UIViewController) -> Self {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Content.reusableIdentifier, for: indexPath) as! Self
