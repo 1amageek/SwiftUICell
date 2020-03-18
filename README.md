@@ -11,6 +11,8 @@ Swift Package Manager
 
 # Usage
 
+Set the layout of CollectionView to `automaticSize`. Self Sizing of SwiftUICell is enabled.
+
 ```swift
 import SwiftUI
 import SwiftUICell
