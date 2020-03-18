@@ -64,8 +64,7 @@ Use EnvironmentObject to communicate Button Handling to ViewController. You can 
 ```swift
 struct YourCell: Cell {
 
-    enum 
-    {
+    enum HandleType {
         case like
         case comment
     }
