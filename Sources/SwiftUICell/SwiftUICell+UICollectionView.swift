@@ -13,8 +13,13 @@ import SwiftUI
 
     @available(iOS 13.0, *)
     public extension UICollectionView {
+
         func register<C: Cell>(content: C.Type) {
             register(SwiftUICell<C>.self, forCellWithReuseIdentifier: C.reusableIdentifier)
+        }
+        
+        func register<C: Cell>(content: C.Type, forSupplementaryViewOfKind: String) {
+            register(SwiftUICell<C>.self, forSupplementaryViewOfKind: forSupplementaryViewOfKind, withReuseIdentifier: C.reusableIdentifier)
         }
     }
 
@@ -28,6 +33,13 @@ import SwiftUI
             cell.parentViewController = parent
             cell.addContentView(contentView)
             return cell
+        }
+
+        open class func dequeue(collectionView: UICollectionView, of kind: String, indexPath: IndexPath, contentView: Content, parent: UIViewController) -> Self {
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Content.reusableIdentifier, for: indexPath) as! Self
+            view.parentViewController = parent
+            view.addContentView(contentView)
+            return view
         }
 
         open class Proxy: ObservableObject {
