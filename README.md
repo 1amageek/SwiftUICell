@@ -11,6 +11,8 @@ Swift Package Manager
 
 # Usage
 
+Set the layout of CollectionView to `automaticSize`. Self Sizing of SwiftUICell is enabled.
+
 ```swift
 import SwiftUI
 import SwiftUICell
@@ -54,5 +56,54 @@ extension YOUR_DELEGATE: UICollectionViewDataSource {
         let cell: SwiftUICell<CellView> = SwiftUICell<CellView>.dequeue(collectionView: collectionView, indexPath: indexPath, contentView: CellView(), parent: self)
         return cell
     }
+}
+```
+
+## Action Handling
+
+Use EnvironmentObject to communicate Button Handling to ViewController. You can use handlers by defining HandleType.
+
+```swift
+struct YourCell: Cell {
+
+    enum HandleType {
+        case like
+        case comment
+    }
+
+    @EnvironmentObject var proxy: SwiftUICell<Self>.Proxy
+
+    var body: some View {
+        HStack(spacing: 13) {
+            Button(action: {
+                self.proxy.handlers[.like]?(nil)
+            }, label: {
+                Image("like")
+                    .renderingMode(.original)
+            })
+            Button(action: {
+                self.proxy.handlers[.comment]?(nil)
+            }, label: {
+                Image("comment")
+                    .renderingMode(.original)
+            })
+            Spacer()
+        }
+        .frame(width: UIScreen.main.bounds.width)
+    }
+}
+```
+
+```swift
+let cell = SwiftUICell<YourCell>
+    .dequeue(collectionView: collectionView,
+             indexPath: indexPath,
+             contentView: YourCell(),
+             parent: self)
+cell.proxy.handlers[.comment] = { _ in
+  // your action
+}
+cell.proxy.handlers[.like] = { _ in
+  // your action
 }
 ```
